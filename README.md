@@ -1,4 +1,5 @@
 # Executive Summary: AI Governance at Speed
+
 ## Bridging Governance Requirements and Developer Velocity with Foundry Citadel Platform
 
 ---
