@@ -1,4 +1,5 @@
 # Foundry Citadel Platform
+
 >*Scalable **AI Landing Zone** with Governance, Observability & Rapid Development*
 
 Foundry **Citadel** Platform is a solution accelerator designed as a **supplemental AI landing zone** that integrates seamlessly with your Azure environment. It provides a **secure, scalable foundation** for running AI applications and agents in production – with **unified governance**, **end-to-end observability**, and tools to **accelerate development**. Citadel delivers a **pre-configured reference architecture** (aligned to Azure’s Cloud Adoption and Well-Architected Frameworks) that can be deployed with one click and includes ready-made code, templates, and documentation following Microsoft’s best practices. This comprehensive approach helps organisations adopt AI **responsibly and efficiently**, ensuring that advanced AI agents can be developed **quickly** while remaining **well-managed** and **compliant** with enterprise requirements.
