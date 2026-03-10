@@ -320,6 +320,8 @@ Provides real-time defense against AI-specific threats and integrates across all
 
 ### 📌 Why This Matters
 
+AI TRiSM was created by Gartner to address the new trust, risk, and security challenges introduced by AI systems—especially generative and agentic AI—by providing a unified framework of technical and governance controls that enforce policies, manage risk, and secure AI behavior at runtime rather than relying on static design‑time guardrails.
+
 Gartner's **AI TRiSM** (Trust, Risk, and Security Management) framework requires runtime technical controls that continuously inspect AI inputs—not just outputs or model configs. In RAG and agentic pipelines, **retrieved content is effectively untrusted input**: malicious or poisoned documents can alter model behavior through indirect prompt injection (IPI), making pre-ingestion validation a first-class governance concern.
 
 > **In TRiSM-aligned systems, retrieved content is treated as untrusted input.**
