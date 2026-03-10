@@ -21,6 +21,7 @@ Foundry Citadel Platform represents Microsoft's comprehensive, layered architect
 - [Layer 2: AI Control Plane](#-layer-2-ai-control-plane--observability-and-compliance)
 - [Layer 3: Agent Identity](#-layer-3-agent-identity--agent-365)
 - [Layer 4: Security Fabric](#-layer-4-security-fabric--unified-protection-across-all-layers)
+- [TRiSM Alignment: Retrieved-Content Validation](#-trism-alignment-retrieved-content-validation--indirect-prompt-injection-controls)
 - [Conclusion](#-conclusion-the-strategic-value-of-microsofts-layered-approach)
 - [Key Resources](#-key-resources-and-references)
 
@@ -312,6 +313,44 @@ Provides real-time defense against AI-specific threats and integrates across all
 
 > [!TIP]
 > Microsoft Defender can surface security signals in Foundry Control Plane and Agent 365 allowing different teams to collaborate on threat detection and response.
+
+***
+
+## 🔍 TRiSM Alignment: Retrieved-Content Validation & Indirect Prompt Injection Controls
+
+### 📌 Why This Matters
+
+Gartner's **AI TRiSM** (Trust, Risk, and Security Management) framework requires runtime technical controls that continuously inspect AI inputs—not just outputs or model configs. In RAG and agentic pipelines, **retrieved content is effectively untrusted input**: malicious or poisoned documents can alter model behavior through indirect prompt injection (IPI), making pre-ingestion validation a first-class governance concern.
+
+> **In TRiSM-aligned systems, retrieved content is treated as untrusted input.**
+> If validation happens *only* at output time, indirect prompt injection remains unmitigated.
+
+### 🏰 How Citadel's Layers Address TRiSM IPI Controls
+
+The table below maps the seven core IPI controls for retrieved-content validation to Citadel's layered architecture:
+
+| # | IPI Control | TRiSM Pillar | Citadel Layer(s) | How Citadel Addresses It |
+|---|-------------|-------------|-------------------|-------------------------|
+| 1 | **Instruction-separation & role enforcement** — detect retrieved content that issues instructions, redefines roles, or introduces execution directives | Risk, Security | 🔷 L1 (Governance Hub) + 🛡️ L4 (Security Fabric) | AI Gateway content-filtering policies block instruction-injection patterns at runtime; Defender provides real-time jailbreak and prompt-injection detection |
+| 2 | **Policy-aware semantic classification** — classify chunks by intent (instructional vs. informational) rather than keyword blocklists | Risk, Trust | 🔶 L2 (AI Control Plane) | Foundry Control Plane evaluators run semantic classification against retrieved context; automated red-teaming validates that paraphrased attacks are caught |
+| 3 | **Source authenticity & provenance** — verify trusted source identity, approved pipeline, and document lineage | Trust, Compliance | 🔷 L1 (Universal Registry) + 🟢 L3 (Agent Identity) | API Center catalogs approved data sources; Entra ID validates agent and service identities accessing retrieval pipelines |
+| 4 | **Sensitive data & policy constraints** — detect PII / regulated data and enforce masking or exclusion *before* prompt assembly | Compliance, Trust | 🛡️ L4 (Purview) + 🔷 L1 (Gateway) | Purview enforces data-governance labels and PII detection on retrieved content; Gateway policies redact or exclude flagged chunks before LLM ingestion |
+| 5 | **Contextual relevance & scope bounding** — ensure chunks are relevant and within task scope to reduce attack surface | Trust, Risk | 🔶 L2 (AI Control Plane) | Foundry evaluators assess retrieval relevance and scope drift; fleet dashboards surface over-retrieval anomalies across agents |
+| 6 | **Risk scoring & enforcement decisioning** — score each chunk (Low/Medium/High) and route to allow, sanitize, exclude, or human review | Risk, Security | 🔶 L2 + 🔷 L1 | Control Plane risk-scores retrieved content via evaluators; Gateway enforces routing decisions (pass / sanitize / block / escalate to HITL) |
+| 7 | **Audit logging & explainability** — log content ID, validation result, enforcement action, and reason codes | Compliance, Trust | 🔶 L2 + 🛡️ L4 | Foundry traces capture end-to-end retrieval decisions; Purview audit trails provide compliance-ready evidence |
+
+### 📊 TRiSM Maturity Model for Retrieved-Content Controls
+
+| Level | Capability | Citadel Coverage |
+|-------|-----------|------------------|
+| L0 | No validation (raw retrieval injected) | — |
+| L1 | Keyword filtering | 🔷 Gateway basic policies |
+| L2 | Pattern + source allowlists | 🔷 Gateway + 🔷 API Center registry |
+| L3 | Semantic intent classification | 🔶 Control Plane evaluators |
+| **L4 (TRiSM)** | **Policy-mapped, risk-scored, auditable validation before ingestion** | **All four Citadel layers operating together** |
+
+> [!NOTE]
+> Reaching L4 maturity requires all four Citadel layers working in concert: the Governance Hub enforces runtime decisions, the AI Control Plane provides risk scoring and observability, Agent Identity ensures provenance and accountability, and the Security Fabric delivers threat detection, data governance, and audit trails.
 
 ***
 
