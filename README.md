@@ -21,6 +21,7 @@ Foundry Citadel Platform represents Microsoft's comprehensive, layered architect
 - [Layer 2: AI Control Plane](#-layer-2-ai-control-plane--observability-and-compliance)
 - [Layer 3: Agent Identity](#-layer-3-agent-identity--agent-365)
 - [Layer 4: Security Fabric](#-layer-4-security-fabric--unified-protection-across-all-layers)
+- [Community & Ecosystem Extensions](#-community--ecosystem-extensions)
 - [Conclusion](#-conclusion-the-strategic-value-of-microsofts-layered-approach)
 - [Key Resources](#-key-resources-and-references)
 
@@ -315,6 +316,34 @@ Provides real-time defense against AI-specific threats and integrates across all
 
 ***
 
+## 🧩 Community & Ecosystem Extensions
+
+The Citadel architecture is designed to be extended. Community-driven, open-source toolkits can add governance capabilities that complement the platform layers.
+
+### Agent Governance Toolkit (AGT)
+
+The [Agent Governance Toolkit](https://github.com/microsoft/agent-governance-toolkit) is an open-source (MIT) project that adds **agent-level governance** inside the agent runtime, complementing Citadel's gateway-level enforcement.
+
+| Capability | Citadel (Gateway) | AGT (Agent Runtime) |
+|------------|-------------------|---------------------|
+| **Enforcement point** | APIM gateway (centralized) | Agent runtime library (in-process) |
+| **Latency** | Network hop through gateway | Sub-millisecond (<0.1 ms) |
+| **Policy granularity** | Rate limits, content filters, quotas | Per-action allow/deny, caller restrictions |
+| **Identity** | Entra ID / subscription keys | Ed25519 / SPIFFE cryptographic identity |
+| **Trust model** | Binary (authenticated or not) | Continuous scoring (0-1000) |
+
+**How AGT maps to Citadel layers:**
+
+*   🔷 **Layer 1:** AGT policy bundles can be referenced in Citadel Access Contracts, injecting agent-level governance rules at deployment time. Gateway rules are evaluated first, AGT rules second; both must pass.
+*   🔶 **Layer 2:** AGT exports governance telemetry (policy decisions, trust score changes, action interceptions) to Event Hub and Application Insights via a Citadel audit exporter, with correlation IDs linking to APIM request traces.
+*   🟢 **Layer 3:** AGT's runtime cryptographic identities federate with Entra ID. Trust scores surface as risk labels in telemetry, not as primary Entra metadata.
+*   🛡️ **Layer 4:** AGT's `data_classification` labels align with Purview sensitivity labels. Trust scores can surface as risk signals in Defender through the telemetry pipeline.
+
+> [!NOTE]
+> AGT is an independent open-source project, not a required Citadel component. For integration guidance, see the [AGT Integration Guide](https://github.com/Azure-Samples/ai-hub-gateway-solution-accelerator/blob/citadel-v1/guides/agent-governance-toolkit-integration.md) in the Governance Hub accelerator and the [Citadel integration example](https://github.com/microsoft/agent-governance-toolkit/tree/main/examples/citadel-governed-agent) in the AGT repository.
+
+***
+
 ## 🌟 Conclusion: The Strategic Value of Microsoft's Layered Approach
 
 ### 🔄 Transforming AI Governance from Constraint to Enabler
@@ -412,4 +441,5 @@ To capitalize on Microsoft's layered approach, enterprises should:
 *   📚 Microsoft Learn – Foundry Control Plane Overview: [learn.microsoft.com](https://learn.microsoft.com/en-us/azure/ai-foundry/control-plane/overview)
 *   📚 Microsoft Learn – Governing Agent Identities with Entra ID: [learn.microsoft.com](https://learn.microsoft.com/en-us/entra/id-governance/agent-id-governance-overview)
 *   📄 EU AI Act High-Risk Requirements Guide: [euairisk.com](https://euairisk.com/resources/eu-ai-act-high-risk-requirements)
+*   🔓 Agent Governance Toolkit (open-source agent-level governance): [github.com/microsoft/agent-governance-toolkit](https://github.com/microsoft/agent-governance-toolkit)
 ***
