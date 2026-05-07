@@ -318,11 +318,17 @@ Provides real-time defense against AI-specific threats and integrates across all
 
 ## 🧩 Community & Ecosystem Extensions
 
-The Citadel architecture is designed to be extended. Community-driven, open-source toolkits can add governance capabilities that complement the platform layers.
+The Citadel architecture is designed to be extended. Open-source toolkits can add governance capabilities that complement the platform layers, providing defense-in-depth at enforcement points that the gateway alone cannot reach.
 
 ### Agent Governance Toolkit (AGT)
 
-The [Agent Governance Toolkit](https://github.com/microsoft/agent-governance-toolkit) is an open-source (MIT) project that adds **agent-level governance** inside the agent runtime, complementing Citadel's gateway-level enforcement.
+The [Agent Governance Toolkit](https://github.com/microsoft/agent-governance-toolkit) is an open-source (MIT) project that adds **agent-level governance** inside the agent runtime, complementing Citadel's gateway-level enforcement. Where Citadel governs the infrastructure perimeter (which models, tools, and agents can be accessed), AGT governs agent behavior itself (what actions the agent takes, whether it follows its policies, and trust relationships between agents).
+
+**Use AGT alongside Citadel when you need:**
+- Per-action tool call allow/deny inside the agent runtime (not just at the gateway)
+- Continuous trust scoring (0-1000) that adapts based on agent behavior
+- Cryptographic agent identity (Ed25519 / SPIFFE) for inter-agent trust
+- Tamper-evident audit logs with hash-chain evidence preservation
 
 | Capability | Citadel (Gateway) | AGT (Agent Runtime) |
 |------------|-------------------|---------------------|
@@ -330,17 +336,24 @@ The [Agent Governance Toolkit](https://github.com/microsoft/agent-governance-too
 | **Latency** | Network hop through gateway | Sub-millisecond (<0.1 ms) |
 | **Policy granularity** | Rate limits, content filters, quotas | Per-action allow/deny, caller restrictions |
 | **Identity** | Entra ID / subscription keys | Ed25519 / SPIFFE cryptographic identity |
-| **Trust model** | Binary (authenticated or not) | Continuous scoring (0-1000) |
+| **Trust model** | Binary (authenticated or not) | Continuous scoring (0-1000) with automatic revocation |
+| **Audit** | APIM request logs | Hash-chain tamper-evident governance events |
 
 **How AGT maps to Citadel layers:**
 
-*   🔷 **Layer 1:** AGT policy bundles can be referenced in Citadel Access Contracts, injecting agent-level governance rules at deployment time. Gateway rules are evaluated first, AGT rules second; both must pass.
-*   🔶 **Layer 2:** AGT exports governance telemetry (policy decisions, trust score changes, action interceptions) to Event Hub and Application Insights via a Citadel audit exporter, with correlation IDs linking to APIM request traces.
-*   🟢 **Layer 3:** AGT's runtime cryptographic identities federate with Entra ID. Trust scores surface as risk labels in telemetry, not as primary Entra metadata.
+*   🔷 **Layer 1:** AGT policy bundles are loaded by the agent at startup (from file, Key Vault, or URL). Gateway rules are evaluated first at the network boundary, AGT rules second inside the agent process; both must pass for an action to proceed.
+*   🔶 **Layer 2:** AGT exports governance telemetry (policy decisions, trust score changes, action interceptions) to Event Hub and Application Insights via a Citadel audit exporter, with correlation IDs (`x-ms-request-id`) linking to APIM request traces for unified observability.
+*   🟢 **Layer 3:** AGT's runtime cryptographic identities federate with Entra ID via attestation-based binding. Trust scores surface as risk labels in telemetry, not as primary Entra metadata.
 *   🛡️ **Layer 4:** AGT's `data_classification` labels align with Purview sensitivity labels. Trust scores can surface as risk signals in Defender through the telemetry pipeline.
 
+**Next steps:**
+
+*   📖 [AGT Integration Guide](https://github.com/Azure-Samples/ai-hub-gateway-solution-accelerator/blob/citadel-v1/guides/agent-governance-toolkit-integration.md): Step-by-step setup for Citadel deployers
+*   🧪 [Citadel Governed Agent Example](https://github.com/microsoft/agent-governance-toolkit/tree/main/examples/citadel-governed-agent): Working example with mock mode for local testing
+*   📚 [AGT Documentation](https://microsoft.github.io/agent-governance-toolkit): Full quickstart, tutorials, and API reference
+
 > [!NOTE]
-> AGT is an independent open-source project, not a required Citadel component. For integration guidance, see the [AGT Integration Guide](https://github.com/Azure-Samples/ai-hub-gateway-solution-accelerator/blob/citadel-v1/guides/agent-governance-toolkit-integration.md) in the Governance Hub accelerator and the [Citadel integration example](https://github.com/microsoft/agent-governance-toolkit/tree/main/examples/citadel-governed-agent) in the AGT repository.
+> AGT is an independent open-source project, not a required Citadel component. It extends the platform for teams that need fine-grained, runtime-level agent governance beyond what gateway policies alone can provide.
 
 ***
 
