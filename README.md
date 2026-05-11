@@ -21,6 +21,8 @@ Foundry Citadel Platform represents Microsoft's comprehensive, layered architect
 - [Layer 2: AI Control Plane](#-layer-2-ai-control-plane--observability-and-compliance)
 - [Layer 3: Agent Identity](#-layer-3-agent-identity--agent-365)
 - [Layer 4: Security Fabric](#-layer-4-security-fabric--unified-protection-across-all-layers)
+- [Community & Ecosystem Extensions](#-community--ecosystem-extensions)
+  - [Agent Governance Toolkit — Layer 2 Extension](#agent-governance-toolkit-agt--layer-2-extension)
 - [Conclusion](#-conclusion-the-strategic-value-of-microsofts-layered-approach)
 - [Key Resources](#-key-resources-and-references)
 
@@ -221,6 +223,7 @@ Powered by Microsoft Foundry Control Plane, this layer automates trust and provi
 |---------|--------------|
 | **Credo AI** | Policy-to-code translation, governance-ready artifacts, real-time evaluator feedback |
 | **Saidot** | EU AI Act-focused risk evaluations, dataset simulation, and compliance mapping |
+| **[Agent Governance Toolkit](https://github.com/microsoft/agent-governance-toolkit)** | In-process policy runtime engine, per-action tool call governance, MCP request/response scanning, continuous trust scoring, framework-agnostic SDK (.NET/TS/Rust/Go) |
 
 #### 🔗 Integration with Microsoft AI Governance Stack
 
@@ -312,6 +315,59 @@ Provides real-time defense against AI-specific threats and integrates across all
 
 > [!TIP]
 > Microsoft Defender can surface security signals in Foundry Control Plane and Agent 365 allowing different teams to collaborate on threat detection and response.
+
+***
+
+## 🧩 Community & Ecosystem Extensions
+
+The Citadel architecture is designed to be extended. Open-source toolkits can plug into specific layers to add governance capabilities that complement the platform.
+
+### Agent Governance Toolkit (AGT) — Layer 2 Extension
+
+The [Agent Governance Toolkit](https://github.com/microsoft/agent-governance-toolkit) is an open-source (MIT) project that extends **Layer 2: Agent Control Plane** with a comprehensive **policy runtime engine** that operates inside the agent process itself. While the Foundry Control Plane provides fleet-level observability and compliance from above, AGT provides per-action policy evaluation, continuous trust scoring, and tamper-evident audit logging from within the agent runtime, regardless of which agent framework is selected (Semantic Kernel, AutoGen, LangGraph, custom).
+
+#### 🔶 Role in Layer 2: Agent Control Plane
+
+AGT extends the AI Control Plane by pushing policy enforcement to the point of execution:
+
+| Control Plane Capability | Foundry Control Plane | AGT Policy Runtime |
+|--------------------------|----------------------|-------------------|
+| **Scope** | Fleet-wide observability and compliance | Per-agent, per-action policy decisions |
+| **Enforcement point** | Post-hoc evaluation and dashboards | Inline, pre-execution (blocks before action fires) |
+| **Latency** | Async telemetry analysis | Sub-millisecond (<0.1 ms) synchronous |
+| **Policy granularity** | AI evaluations, drift monitoring | Tool call allow/deny, MCP request/response filtering, PII/CRI blocking |
+| **Trust model** | Agent registration and lifecycle | Continuous scoring (0-1000) with automatic revocation |
+| **Runtime coupling** | Framework-agnostic (telemetry consumers) | Framework-agnostic (SDK wraps any runtime) |
+
+Together, Foundry Control Plane and AGT provide both the "observe and evaluate" and "intercept and enforce" halves of agent governance within Layer 2.
+
+#### 🔗 Integration with Other Citadel Layers
+
+While AGT lives primarily in Layer 2, it integrates with the full Citadel stack:
+
+| Layer | How AGT Integrates |
+|-------|-------------------|
+| 🔷 **Layer 1** (Governance Hub) | AGT loads policy bundles from Azure Key Vault or APIM-distributed config. Gateway rules at the network boundary and AGT rules inside the agent both must pass for an action to proceed (defense-in-depth). |
+| 🔶 **Layer 2** (AI Control Plane) | **Primary home.** AGT's policy runtime engine, MCP Security Gateway, and trust scoring operate here. Governance telemetry (policy decisions, trust changes, interceptions) exports to Event Hub and Application Insights via a Citadel audit exporter, with `x-ms-request-id` correlation linking to APIM traces. |
+| 🟢 **Layer 3** (Agent Identity) | AGT's Ed25519/SPIFFE runtime identities federate with Entra Agent User via attestation-based binding. Trust scores surface as risk labels in A365 telemetry. |
+| 🛡️ **Layer 4** (Security Fabric) | AGT's `data_classification` labels align with Purview sensitivity labels. MCP response scanning blocks PII/CRI leaks before they reach LLM context, complementing Defender's threat detection. |
+
+#### 🛠️ Key Capabilities AGT Adds to Layer 2
+
+*   **MCP Security Gateway:** Request and response interception for all MCP tool calls with PII/CRI detection, prompt injection blocking, and configurable response policies (BLOCK / SANITIZE / LOG)
+*   **Policy Runtime Engine:** OPA/Rego-based policy evaluation at every agent action, supporting both built-in rules and custom enterprise policies
+*   **Continuous Trust Scoring:** Dynamic 0-1000 trust score per agent that adapts based on behavior, with automatic capability revocation on threshold breach
+*   **Cryptographic Agent Identity:** Ed25519 key pairs for agent signing, SPIFFE-compatible for service mesh environments
+*   **Tamper-Evident Audit:** Hash-chain linked governance events that cannot be retroactively modified
+
+#### 📚 Resources
+
+*   📖 [AGT Integration Guide](https://github.com/Azure-Samples/ai-hub-gateway-solution-accelerator/blob/citadel-v1/guides/agent-governance-toolkit-integration.md): Step-by-step setup for Citadel deployers
+*   🧪 [Citadel Governed Agent Example](https://github.com/microsoft/agent-governance-toolkit/tree/main/examples/citadel-governed-agent): Working example with mock mode for local testing
+*   📚 [AGT Documentation](https://microsoft.github.io/agent-governance-toolkit): Full quickstart, tutorials, and API reference
+
+> [!NOTE]
+> AGT is an independent open-source project that extends the Citadel platform. It provides the in-process policy runtime engine for Layer 2, enabling comprehensive agent governance regardless of the selected agent framework or hosting environment.
 
 ***
 
@@ -412,4 +468,5 @@ To capitalize on Microsoft's layered approach, enterprises should:
 *   📚 Microsoft Learn – Foundry Control Plane Overview: [learn.microsoft.com](https://learn.microsoft.com/en-us/azure/ai-foundry/control-plane/overview)
 *   📚 Microsoft Learn – Governing Agent Identities with Entra ID: [learn.microsoft.com](https://learn.microsoft.com/en-us/entra/id-governance/agent-id-governance-overview)
 *   📄 EU AI Act High-Risk Requirements Guide: [euairisk.com](https://euairisk.com/resources/eu-ai-act-high-risk-requirements)
+*   🔓 Agent Governance Toolkit (open-source agent-level governance): [github.com/microsoft/agent-governance-toolkit](https://github.com/microsoft/agent-governance-toolkit)
 ***
