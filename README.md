@@ -1,456 +1,397 @@
-# 🏰 Foundry Citadel Platform
+# 🏰 AI Citadel Blueprint
 
-### A Unified, Layered Approach to AI Security and Compliance
+### Frontier, made executable — one governed platform for any agent, any data, any tool, any model
 
 [![Microsoft](https://img.shields.io/badge/Microsoft-AI%20Governance-0078D4?style=for-the-badge&logo=microsoft&logoColor=white)](https://aka.ms/foundry-citadel)
-[![IDC Leader](https://img.shields.io/badge/IDC%20MarketScape-Leader%202025--2026-00A86B?style=for-the-badge)](https://learn.microsoft.com/en-us/azure/ai-foundry/control-plane/overview)
+[![Frontier](https://img.shields.io/badge/Frontier-Transformation-C03BC4?style=for-the-badge)](https://aka.ms/FrontierTransformation)
+[![IDC Leader](https://img.shields.io/badge/IDC%20MarketScape-Leader%202025--2026-00A86B?style=for-the-badge)](https://www.microsoft.com/en-us/security/blog/2026/01/14/microsoft-named-a-leader-in-idc-marketscape-for-unified-ai-governance-platforms/)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE.md)
 
-Foundry Citadel Platform represents Microsoft's comprehensive, layered architecture for AI governance, designed to enable enterprises to scale AI innovation while maintaining trust, security, and compliance. This document provides an in-depth analysis of the technical approach, strategic value proposition, and competitive landscape for Microsoft's layered AI governance solution.
+**Frontier Transformation is the destination. The AI Citadel Blueprint is how you get there.**
+
+Frontier Transformation is Microsoft's strategy for how organizations move from experimenting with AI to transforming at enterprise scale — the *what* and the *why*. The AI Citadel Blueprint is the *how*: the opinionated technical implementation that carries that strategy into production, securely and at scale.
+
+The promise of that *how* is **universality**. Regardless of the agent you build, the data you hold, the tools you need, or the models you choose, you get intelligence delivered through **one governed platform** — where **trust is everybody's responsibility**, layered by design.
 
 > [!NOTE]
-> The purpose of Foundry Citadel Platform is to provide opinionated, pre-built patterns for AI governance that leverage Microsoft's unique capabilities and ecosystem. It is not intended to be a one-size-fits-all solution, but rather a proven architectural approach that can be adapted and extended based on specific organizational needs and risk profiles.
+> AI Citadel Blueprint provides opinionated, pre-built patterns for AI governance that leverage Microsoft's unique capabilities and ecosystem while remaining **model-diverse, open, and supportive of heterogeneous environments**. It is not a one-size-fits-all solution — it is a proven architectural approach to adapt and extend based on your organizational structure, risk profile, and regulatory context.
+>
+> *Opinionated where it speeds you up — open everywhere it matters.*
 
 ---
 
 ## 📑 Table of Contents
 
-- [Executive Summary](#-executive-summary)
-- [Unified Technical Approach](#-unified-technical-approach-to-microsofts-layered-ai-governance)
-- [Layer 1: Governance Hub](#-layer-1-governance-hub--runtime-enforcement-plane)
-- [Layer 2: AI Control Plane](#-layer-2-ai-control-plane--observability-and-compliance)
-- [Layer 3: Agent Identity](#-layer-3-agent-identity--agent-365)
-- [Layer 4: Security Fabric](#-layer-4-security-fabric--unified-protection-across-all-layers)
-- [TRiSM Alignment: Retrieved-Content Validation](#-trism-alignment-retrieved-content-validation--indirect-prompt-injection-controls)
-- [Conclusion](#-conclusion-the-strategic-value-of-microsofts-layered-approach)
-- [Key Resources](#-key-resources-and-references)
+**This document — the Overview**
 
-## 📋 Executive Summary
+- [The opportunity — and the wall](#-the-opportunity--and-the-wall)
+- [Frontier success framework: four pillars](#-frontier-success-framework-four-pillars)
+- [The Frontier transformation engine: Intelligence + Trust](#-the-frontier-transformation-engine-intelligence--trust)
+- [Citadel Blueprint: the four layers](#-citadel-blueprint-the-four-layers)
+- [Trust is everybody's responsibility](#-trust-is-everybodys-responsibility)
+- [Defense in depth: no single point of failure](#-defense-in-depth-no-single-point-of-failure)
+- [Layered observability: one estate, many lenses](#-layered-observability-one-estate-many-lenses)
+- [Every Frontier pillar, delivered](#-every-frontier-pillar-delivered)
+- [From vision to scale](#-from-vision-to-scale)
+- [Measurable business impact](#-measurable-business-impact)
+- [Key resources](#-key-resources-and-references)
 
-### ⚠️ The AI Governance Crisis
+**Companion guidance**
 
-The enterprise AI landscape in 2026 stands at a critical inflection point. With 20% of all data breaches now directly attributed to unmanaged Shadow AI usage, and 95% of unmanaged GenAI pilots failing to reach production due to lack of governance, organizations face an unprecedented challenge: how to scale AI innovation while maintaining trust, security, and compliance.
+| Document | What it covers |
+|----------|----------------|
+| [Agent Types Mapping](./agent-types-mapping.md) | How Copilot Studio, Microsoft Foundry, your own platform, and third-party agents each wire into the four control layers — natively, by configuration, or by federation |
+| [Organizational Alignment & Ownership](./organizational-alignment-and-ownership.md) | The operating model and the full RACI: who sets the standards, who runs the platform, who builds the agents |
+| [Technical Activation Paths](./technical-activation-paths.md) | The four parallel tracks — deep dive → proof of value → production — plus what to provision, what to activate, and sizing |
+| [Layer 1 · Governance Hub](./layer-1-governance-hub.md) | The runtime enforcement plane — one governed front door across four dimensions |
+| [Layer 2 · Agent Operations](./layer-2-agent-operations.md) | The AI experience engine and its first line of trust |
+| [Layer 3 · Agent Management](./layer-3-agent-management.md) | Agents as owned, accountable enterprise and auditable assets |
+| [Layer 4 · Security Foundation](./layer-4-security-foundation.md) | Protect and detect beneath every agent across all layers |
 
-### 🏆 Microsoft's Strategic Position
+---
 
-In January 2026, Microsoft was named a **Leader** in the IDC MarketScape for Worldwide Unified AI Governance Platforms 2025–2026, recognized for its end-to-end governance spanning traditional machine learning, generative AI, and agentic AI systems. This recognition validates Microsoft's comprehensive approach to AI governance as both a technical and strategic imperative.
+## 📊 The opportunity — and the wall
 
-The market trajectory underscores the urgency: Gartner projects that spending on AI data governance will reach $492 million in 2026 and surpass $1 billion by 2030, with fragmented AI regulation extending to 75% of the world's economies by 2030. Organizations deploying AI governance platforms are 3.4 times more likely to achieve high effectiveness in AI governance than those that do not.
+**The ambition is proven. Execution is where it breaks.**
 
-### 🏛️ Architectural Philosophy: Separation of Concerns with Unified Oversight
+<table>
+<tr>
+<th align="left">🟣 THE OPPORTUNITY</th>
+<th align="left">🔴 THE WALL</th>
+</tr>
+<tr valign="top">
+<td>
 
-The four layers are not isolated silos—they form an integrated architecture grounded in the principle of **separation of concerns with unified oversight**. Each layer owns a distinct governance responsibility, yet all layers interlock to deliver end-to-end trust:
+**88%** of Frontier Firms report strength in top-line growth — compared to just **23%** for laggards.
 
-*   🔷 **Layer 1 – Governance Hub** acts as the physical gateway: a hub-and-spoke deployment where a centrally managed AI gateway (Azure API Management) enforces runtime policies—identity validation, token rate limiting, content filtering, and cost attribution—while spoke environments give each business unit autonomous development within guardrails.
+**2.3x** average ROI reported for agentic AI.
 
-*   🔶 **Layer 2 – AI Control Plane** sits above the gateway to provide the observability and compliance brain. Microsoft Foundry Control Plane continuously evaluates agent behavior, captures end-to-end traces, runs automated red-teaming, and powers fleet operations dashboards—turning raw telemetry from every spoke into actionable governance insights.
+</td>
+<td>
 
-*   🟢 **Layer 3 – Agent Identity (Agent 365)** ensures that every agent, whether built in-house or discovered as shadow AI, is a first-class enterprise citizen. Unique identities issued through Microsoft Entra ID, combined with sponsorship models, lifecycle controls, and access packages, mean that no agent operates anonymously at scale.
+**95%** of AI pilots never reach production — as agents scale, risk, integration, and cost compound exponentially.
 
-*   🛡️ **Layer 4 – Security Fabric** weaves real-time protection across the other three layers. Microsoft Defender provides AI-specific threat intelligence and jailbreak detection, Microsoft Purview enforces data governance and PII protection, and Microsoft Entra orchestrates identity-driven access control—together closing the loop from policy definition to runtime defense.
+**84%** of companies haven't redesigned work around AI capabilities.
 
-This layered separation means teams can evolve any single capability—upgrade the gateway, add new compliance evaluators, onboard new agent types, or adopt emerging security detections—without destabilizing the rest of the governance stack. The result is an architecture that scales from 10 to 10,000 agents while keeping governance both comprehensive and composable.
+</td>
+</tr>
+</table>
 
-### 🎯 Strategic Value Proposition
+*Sources: Deloitte, State of AI in the Enterprise (Jan 2026); IDC InfoBrief sponsored by Microsoft (US53838325, Nov 2025); Microsoft (95% pilot figure).*
 
-This layered approach enables enterprises to:
+**Strategy sets the destination — something must carry it into production, securely and at scale.**
 
-*   📈 Scale from 10 to 10,000 agents with consistent governance and security.
-*   ⚡ Reduce compliance bottlenecks through automated policy enforcement at runtime.
-*   🚀 Achieve faster time-to-value with pre-built, proven patterns.
-*   💰 Lower regulatory expenses by 20% through effective governance technologies.
-*   🔄 Maintain continuous compliance as AI systems and regulations evolve.
+### Why scaling agents breaks current infrastructure
 
-***
+Early AI innovation feels fast — teams spin up agents quickly. But once organizations move beyond **50–100 agents**, things break. Not because the technology failed, but because **governance didn't scale**. Two things happen at once:
 
-## ⚙️ Unified Technical Approach to Microsoft's Layered AI Governance
+- **Shadow AI** emerges outside central control.
+- **Operational friction** explodes as security and risk teams fall back on manual reviews.
 
-### 🔀 The Governance-Velocity Paradox
+The result is higher cost, less visibility, and loss of trust. This is the **production wall** — a structural problem, not a tooling problem.
 
-The fundamental challenge facing enterprises is what Microsoft terms the “Governance-Velocity Paradox.” Compliance traditionally slows innovation, yet AI's transformative potential means enterprises cannot afford to choose between speed and safety. As AI agents move from chat to act and from few to thousands, the stakes escalate exponentially.
+### Traditional security is blind to agentic intent
 
-Traditional governance approaches create critical bottlenecks:
+When AI moves from *chatting* to *acting*, the threat model changes completely. Traditional security inspects packets, headers, and endpoints — but **it cannot understand intent**. Agents reason, plan, and take actions at machine speed, which introduces **semantic risk**: prompt injection, jailbreaks, unintended actions, and cascading failures.
 
-*   ❌ Manual Risk Assessments: Time-consuming and lacking standardization
-*   ❌ Scattered Evaluation Tools: Fragmented across different teams and systems
-*   ❌ Unclear Governance Requirements: Ambiguous policies difficult to operationalize
-*   ❌ Implementation Gaps: Policies rarely map cleanly to real-world technical implementation
+Identity changes too. Agents are not users and they are not applications. They require **dynamic, policy-aware identities**, not static service accounts. Governance must understand **context, intent, and behavior in real time**.
 
-The result: delays that frustrate both governance teams and developers, slowing AI adoption and increasing organizational risk.
+> **The real question:** what must be true for an organization to scale from **10 agents to 10,000**, while staying grounded in **insight, control, and trust**?
 
-### 🤝 The Collaboration Challenge
-
-As AI systems grow from few agents to many, the need for collaboration between different agents, tools, and data becomes key to reusing investments in quality agents. This collaboration typically spans cross-business units and domains to achieve better return on investment and accelerate adoption.
-
-Effective AI governance demands multiple stakeholders collaborating effectively:
-
-*   👔 Compliance Officers & Chief AI Officers: Must determine what needs to be assessed to comply with company policies and regulations
-*   ☁️ Cloud Ops Teams: Need to understand how to implement controls and monitor compliance at runtime & establish landing zones for AI workloads
-*   👨‍💻 AI Developers & Engineering Teams: Need to operationalize these requirements by generating the right qualitative and quantitative evidence
-
-### 💨 From Bottlenecks to Acceleration
-
-The transformation from traditional to Microsoft's approach:
-
-| Traditional Approach      | Foundry Citadel Platform         |
-| ------------------------- | -------------------------------- |
-| ❌ Manual risk assessments | ✅ Automated compliance checks    |
-| ❌ Scattered tools         | ✅ Unified observability platform |
-| ❌ Unclear requirements    | ✅ Codified governance contracts  |
-| ❌ Implementation gaps     | ✅ Pre-built, proven patterns     |
-| ❌ Friction between teams  | ✅ Streamlined collaboration      |
-| ❌ Slow deployment cycles  | ✅ Rapid, repeatable deployments  |
-
-This transformation enables organizations to move from AI experiments to AI at scale, with compliance automated, observability centralized, and policies as code.
-
-***
-
-## 🛠️ Detailed Technical Approach: Layer-by-Layer Analysis
-
-### 🔷 Layer 1: Governance Hub – Runtime Enforcement Plane
-
-#### 📌 Overview and Purpose
-
-The Governance Hub serves as the runtime enforcement layer that mediates AI traffic between agents and LLMs, tools, and other agents. It addresses the critical reality that in an AI system, three primary assets must be governed:
-
-*   🧠 **LLMs:** Provide the brain for AI agents
-*   🧰 **Tools and Knowledge:** Allow agents to be grounded with the ability to act
-*   🤖 **External Agents:** Enable collaboration as AI systems grow
-
-Without runtime governance, organizations face:
-
-*   💸 Unpredictable costs
-*   ⚠️ Reliability issues
-*   🔓 Security threats
-*   😤 Developer friction
-*   😱 Governance nightmares
-
-#### 🧱 Core Components
-
-*   🌐 **Unified AI Gateway** (Azure API Management): Single control point for models, tools, and agents
-*   📖 **Universal Registry** (Azure API Center): Centralized catalog for discovery
-*   🛡️ **Enforcement Capabilities:**
-    *   🔑 Identity validation
-    *   ⚙️ Smart operations (token rate limiting, semantic caching, cost attribution)
-    *   🚨 Safety (content filtering, prompt injection protection, PII detection)
-
-#### 🏛️ Architectural Philosophy: Separation of Concerns with Unified Oversight
-
-Microsoft's architectural philosophy addresses the governance-velocity paradox through a hub-and-spoke deployment model that provides:
-
-<details>
-<summary>🔹 <b>Central Governance Hub</b> – Deployed centrally to serve as the <b>runtime</b> command center</summary>
-
-*   Unified AI gateway for all model, tool, and agent access
-*   Universal AI registry for centralized catalog and discovery
-*   Centralized logging, monitoring, and policy enforcement systems
-*   Shared infrastructure that every project leverages
-
-</details>
-
-<details>
-<summary>🔹 <b>Agent Environment Spokes</b> – Deployed multiple times, one for each business unit or use case</summary>
-
-*   Fully self-contained and secure with dedicated compute, storage, data, and dependent services
-*   Teams can work autonomously without stepping on each other's toes
-*   Each spoke connects back to the hub for centralized governance and observability
-
-</details>
-
-This architecture delivers “local freedom” in each project area under a common governance framework enforced by the hub.
-
-#### 📡 Hub-and-Spoke Deployment Model
-
-The deployment model consists of two primary components:
-
-<details>
-<summary>🔸 <b>AI Governance Hub (Central Deployment)</b></summary>
-
-*   One deployment governing both production and non-production environments
-*   Or two deployments (one for production, one for non-production) with ability to add more per requirements
-*   Enforces runtime policies-as-code for all AI interactions across the organization
-*   Platform-level observability & audit-trail: Centralized performance metrics, usage tracking, with optional request/response logging for audit and debugging
-*   📎 Guidance available at: <https://aka.ms/ai-hub-gateway>
-
-</details>
-
-<details>
-<summary>🔸 <b>Agents Environment (Spoke Deployment)</b></summary>
-
-*   Deployed at spokes with many deployments across the organization
-*   One deployment per business unit or use case
-*   Accelerates development through templated deployment that is configurable
-*   📎 Guidance available at: <https://github.com/Azure/AI-Landing-Zones>
-
-</details>
-
-#### 🔗 Integration with Microsoft AI Governance Stack
-
-| Layer | Integration |
-|-------|-------------|
-| 🔶 **Layer 2** (AI Control Plane) | Foundry Control Plane relies on the runtime AI Gateway for policy enforcement and collects telemetry for observability and compliance |
-| 🟢 **Layer 3** (Agent Identity) | Agent 365 identities are validated at the gateway for access control and policy enforcement |
-| 🛡️ **Layer 4** (Security Fabric) | Defender for API security as added layer of security and threat intelligence |
-
-***
-
-### 🔶 Layer 2: AI Control Plane – Observability and Compliance
-
-#### 📌 Overview and Strategic Importance
-
-Powered by Microsoft Foundry Control Plane, this layer automates trust and provides visibility, governance, and control for AI agents, models, and tools across the enterprise.
-
-#### 🧱 Core Functionalities
-
-*   📋 **Controls:** Define and enforce AI evaluations and compliance policies
-*   🔭 **Observability:**
-    *   Agent-level: Execution traces, performance monitoring, debugging tools
-    *   AI Evaluations: during development and in production
-*   🔐 **Security:**
-    *   Zero trust architecture
-    *   Integration with Microsoft security fabric and Agent 365 identity platform
-    *   AI Red Teaming
-    *   Drift monitoring
-*   🚀 **Fleet Operations:**
-    *   Track 100% of registered agents
-    *   Manage activation and lifecycle
-    *   Visualize fleet health and anomalies
-
-#### 🤝 Integration with Partner Ecosystem
-
-| Partner | Capabilities |
-|---------|--------------|
-| **Credo AI** | Policy-to-code translation, governance-ready artifacts, real-time evaluator feedback |
-| **Saidot** | EU AI Act-focused risk evaluations, dataset simulation, and compliance mapping |
-
-#### 🔗 Integration with Microsoft AI Governance Stack
-
-| Layer | Integration |
-|-------|-------------|
-| 🔷 **Layer 1** (Governance Hub) | Relies on runtime telemetry from the AI Gateway for observability and compliance monitoring |
-| 🟢 **Layer 3** (Agent Identity) | Uses identity information from Agent 365 for access control and compliance enforcement |
-| 🛡️ **Layer 4** (Security Fabric) | Integrates with Defender for threat intelligence and Purview for data governance insights |
-
-***
-
-### 🟢 Layer 3: Agent Identity – Agent 365
-
-#### 📌 Overview and Strategic Significance
-
-Transforms agents into enterprise assets with unique identities, lifecycle management, and access controls. Addresses shadow AI and enables scale with trust.
-
-#### 🧱 Core Capabilities
-
-*   🆔 **Agent Identity Platform** (Microsoft Entra ID):
-    *   Unique agent identities
-    *   Shadow agent detection
-    *   Lifecycle and ownership management
-    *   Sponsorship model for human accountability
-*   🔐 **Access Management:**
-    *   Access packages
-    *   Role-based and attribute-based access control
-    *   Expiration and review workflows
-
-#### 🔗 Integration with Microsoft AI Governance Stack
-
-| Layer | Integration |
-|-------|-------------|
-| 🔷 **Layer 1** (Governance Hub) | Relies on runtime identity enforcement from the AI Gateway |
-| 🔶 **Layer 2** (AI Control Plane) | Ability to register Foundry Agent identities with Agent 365 for unified identity management and compliance enforcement |
-| 🛡️ **Layer 4** (Security Fabric) | Integrates with Microsoft Entra for identity governance and with Defender for threat detection and Purview signals based on agent behavior |
-
-***
-
-### 🛡️ Layer 4: Security Fabric – Unified Protection Across All Layers
-
-#### 📌 Overview
-
-Provides real-time defense against AI-specific threats and integrates across all governance layers.
-
-#### 🧱 Core Components
-
-<details>
-<summary>🛡️ <b>Microsoft Defender</b></summary>
-
-*   Threat intelligence for AI & API attack vectors
-*   AI-specific posture management
-*   Real-time jailbreak detection
-*   Prompt injection protection
-
-</details>
-
-<details>
-<summary>📚 <b>Microsoft Purview</b></summary>
-
-*   Data governance and labeling
-*   PII detection and protection
-*   Compliance automation for 100+ frameworks
-
-</details>
-
-<details>
-<summary>🔐 <b>Microsoft Entra</b></summary>
-
-*   Agent and application identity platform
-*   Access control and lifecycle automation
-*   Shadow agent discovery
-
-</details>
-
-#### 🌐 Unified Security Architecture
-
-*   🔄 Coordinated threat response across Defender, Entra, and Purview
-*   👁️ End-to-end visibility and audit trails
-*   ⚡ Real-time protection and compliance by design
-
-#### 🔗 Integration with Microsoft AI Governance Stack
-
-| Layer | Integration |
-|-------|-------------|
-| 🔷 **Layer 1** (Governance Hub) | Defender provides runtime protection for the AI Gateway, while Purview enforces data governance policies at the gateway level |
-| 🔶 **Layer 2** (AI Control Plane) | Defender and Purview provide security insights and compliance monitoring for agent behavior, while Entra ensures identity governance |
-| 🟢 **Layer 3** (Agent Identity) | Entra provides identity governance for agents, while Defender monitors for identity-based threats and Purview enforces data governance policies based on agent access and behavior |
+**The answer: AI governance is the bridge to scale.** This is where governance stops being a blocker and becomes an enabler.
 
 > [!TIP]
-> Microsoft Defender can surface security signals in Foundry Control Plane and Agent 365 allowing different teams to collaborate on threat detection and response.
+> **The proof.** In January 2026, Microsoft was named a **Leader** in the IDC MarketScape for Worldwide Unified AI Governance Platforms 2025–2026, recognized for end-to-end governance spanning traditional machine learning, generative AI, and agentic AI. But the real differentiator is not the analyst label — it is the ability to **execute governance at enterprise scale**.
 
-***
+---
 
-## 🔍 TRiSM Alignment: Retrieved-Content Validation & Indirect Prompt Injection Controls
+## 🎯 Frontier success framework: four pillars
 
-### 📌 Why This Matters
+Frontier Firms move beyond experimentation to enterprise-scale transformation — organized around four pillars of **business value**, not technology.
 
-AI TRiSM was created by Gartner to address the new trust, risk, and security challenges introduced by AI systems—especially generative and agentic AI—by providing a unified framework of technical and governance controls that enforce policies, manage risk, and secure AI behavior at runtime rather than relying on static design‑time guardrails.
+| # | Pillar | What it means |
+|---|--------|---------------|
+| **01** | **Enrich employee experiences** | Automate the routine so people do their best, most human work — with AI in the flow of work. |
+| **02** | **Reinvent customer engagement** | Deliver personalized, responsive experiences at every touchpoint — grounded in your context. |
+| **03** | **Reshape business processes** | Reimagine workflows end-to-end — not incremental fixes — with agents acting on the business. |
+| **04** | **Bend the curve on innovation** | Put the power to build in every role, closest to the problem — and scale it enterprise-wide. |
 
-Gartner's **AI TRiSM** (Trust, Risk, and Security Management) framework requires runtime technical controls that continuously inspect AI inputs—not just outputs or model configs. In RAG and agentic pipelines, **retrieved content is effectively untrusted input**: malicious or poisoned documents can alter model behavior through indirect prompt injection (IPI), making pre-ingestion validation a first-class governance concern.
+Every one of these pillars is delivered by **the same platform** — just pointed at a different experience.
 
-> **In TRiSM-aligned systems, retrieved content is treated as untrusted input.**
-> If validation happens *only* at output time, indirect prompt injection remains unmitigated.
+---
 
-### 🏰 How Citadel's Layers Address TRiSM IPI Controls
+## ⚙️ The Frontier transformation engine: Intelligence + Trust
 
-The table below maps the seven core IPI controls for retrieved-content validation to Citadel's layered architecture:
+Frontier Transformation rests on two forces working together:
 
-| # | IPI Control | TRiSM Pillar | Citadel Layer(s) | How Citadel Addresses It |
-|---|-------------|-------------|-------------------|-------------------------|
-| 1 | **Instruction-separation & role enforcement** — detect retrieved content that issues instructions, redefines roles, or introduces execution directives | Risk, Security | 🔷 L1 (Governance Hub) + 🛡️ L4 (Security Fabric) | AI Gateway content-filtering policies block instruction-injection patterns at runtime; Defender provides real-time jailbreak and prompt-injection detection |
-| 2 | **Policy-aware semantic classification** — classify chunks by intent (instructional vs. informational) rather than keyword blocklists | Risk, Trust | 🔶 L2 (AI Control Plane) | Foundry Control Plane evaluators run semantic classification against retrieved context; automated red-teaming validates that paraphrased attacks are caught |
-| 3 | **Source authenticity & provenance** — verify trusted source identity, approved pipeline, and document lineage | Trust, Compliance | 🔷 L1 (Universal Registry) + 🟢 L3 (Agent Identity) | API Center catalogs approved data sources; Entra ID validates agent and service identities accessing retrieval pipelines |
-| 4 | **Sensitive data & policy constraints** — detect PII / regulated data and enforce masking or exclusion *before* prompt assembly | Compliance, Trust | 🛡️ L4 (Purview) + 🔷 L1 (Gateway) | Purview enforces data-governance labels and PII detection on retrieved content; Gateway policies redact or exclude flagged chunks before LLM ingestion |
-| 5 | **Contextual relevance & scope bounding** — ensure chunks are relevant and within task scope to reduce attack surface | Trust, Risk | 🔶 L2 (AI Control Plane) | Foundry evaluators assess retrieval relevance and scope drift; fleet dashboards surface over-retrieval anomalies across agents |
-| 6 | **Risk scoring & enforcement decisioning** — score each chunk (Low/Medium/High) and route to allow, sanitize, exclude, or human review | Risk, Security | 🔶 L2 + 🔷 L1 | Control Plane risk-scores retrieved content via evaluators; Gateway enforces routing decisions (pass / sanitize / block / escalate to HITL) |
-| 7 | **Audit logging & explainability** — log content ID, validation result, enforcement action, and reason codes | Compliance, Trust | 🔶 L2 + 🛡️ L4 | Foundry traces capture end-to-end retrieval decisions; Purview audit trails provide compliance-ready evidence |
+- **Intelligence** — deep business context: the agents that actually deliver the experience.
+- **Trust** — security, governance, and control: what lets you move faster with confidence.
 
-### 📊 TRiSM Maturity Model for Retrieved-Content Controls
+Citadel Blueprint is the **opinionated implementation** of that engine — layered, yet integrated, so rich intelligence and uncompromised trust ship together at the speed of innovation.
 
-| Level | Capability | Citadel Coverage |
-|-------|-----------|------------------|
-| L0 | No validation (raw retrieval injected) | — |
-| L1 | Keyword filtering | 🔷 Gateway basic policies |
-| L2 | Pattern + source allowlists | 🔷 Gateway + 🔷 API Center registry |
-| L3 | Semantic intent classification | 🔶 Control Plane evaluators |
-| **L4 (TRiSM)** | **Policy-mapped, risk-scored, auditable validation before ingestion** | **All four Citadel layers operating together** |
+| | **Rich intelligence** | **Uncompromised trust** | **Undiminished speed** |
+|---|---|---|---|
+| | *Intelligence layer* | *Trust, shared* | *Speed of innovation* |
+| | Any model, any agent type — SaaS, managed, BYO, 3rd-party | Agent-level: traces, evals, red-teaming, guardrails | Opinionated defaults, not a blank canvas |
+| | Grounded in heterogeneous context (IQ) | Platform-level: Governance Hub, Agent Management | Controls live in the platform, not in every build |
+| | Extended by your tools (MCP), agent-to-agent | Security Foundation protects & detects across the estate | New agents inherit trust on day one |
 
-> [!NOTE]
-> Reaching L4 maturity requires all four Citadel layers working in concert: the Governance Hub enforces runtime decisions, the AI Control Plane provides risk scoring and observability, Agent Identity ensures provenance and accountability, and the Security Fabric delivers threat detection, data governance, and audit trails.
+### The mapping that matters
 
-***
+Both forces map onto the blueprint — but **not the way people expect**:
 
-## 🌟 Conclusion: The Strategic Value of Microsoft's Layered Approach
+- **Intelligence is surfaced through Agent Operations (Layer 2).** The agents that deliver the experience: any type, grounded in your data, using your tools, on any model.
+- **Trust is not the job of a couple of security controls off to the side.** It starts *inside* Agent Operations — end-to-end traces, AI evaluations, red-teaming, and guardrails tuned to each agent's type and objective. That is **agent-level trust, and the builder owns it.**
+- **Three platform controls then extend trust across the whole estate** — Governance Hub governs every call, Agent Management makes every agent accountable, and Security Foundation protects and detects.
 
-### 🔄 Transforming AI Governance from Constraint to Enabler
+> **The layer that delivers intelligence is also the first line of trust — then the platform controls make it hold at scale.**
 
-Microsoft's layered approach to AI security and governance represents a fundamental reimagining of how enterprises can scale AI innovation while maintaining trust, security, and compliance. By architecting governance as a unified, multi-layer system rather than a collection of disparate tools, Microsoft addresses the core challenge facing enterprises in 2026: the governance-velocity paradox.
+---
 
-### 🏅 Key Strategic Advantages
+## 🏛️ Citadel Blueprint: the four layers
 
-1.  🧩 Comprehensive Coverage Without Complexity  
-    The four-layer architecture provides complete governance coverage while maintaining clear separation of concerns:
+These are not four disconnected point tools. They are four reinforcing layers that compound into one governed, defensible system for production AI.
 
-    *   Runtime enforcement (Layer 1) ensures every AI interaction is governed
-    *   Observability and compliance (Layer 2) provide visibility and automated policy enforcement and ensure agents are executing as intended and compliant with regulations
-    *   Agent identity (Layer 3) transforms agents into managed enterprise assets
-    *   Security fabric (Layer 4) integrates protection across all layers
+| Layer | Name | Role | Built on | The advantage |
+|-------|------|------|----------|---------------|
+| 🔷 **L1** | [Governance Hub](./layer-1-governance-hub.md) | Runtime enforcement plane — **govern every call** | Azure API Management · Azure API Center | **Govern once, enforce everywhere.** Policy set centrally applies to every model, tool, and agent — control scales *with* adoption instead of fighting it. |
+| 🔶 **L2** | [Agent Operations](./layer-2-agent-operations.md) | The AI experience engine **and its first line of trust** | Microsoft Foundry · Agent Service · Foundry IQ · Control Plane · Container Apps / AKS | **Ship agents faster, safely.** Templated landing zones and built-in guardrails turn months of setup into repeatable, observable deployments. **Foundry serves as runtime *and* as the observability plane for agents running anywhere.** |
+| 🟢 **L3** | [Agent Management](./layer-3-agent-management.md) | **The command center for every agent** — every agent owned | Microsoft Agent 365 · Entra Agent ID · Agent 365 SDK | **Every agent owned and accountable.** One registry, one identity model, one audit trail — spanning SaaS, managed runtime, BYO, and third-party agents. **Identity is the connective tissue that lights up Layer 4.** |
+| 🛡️ **L4** | [Security Foundation](./layer-4-security-foundation.md) | Unified protection across all layers — **protect & detect** | Microsoft Defender · Microsoft Purview · Microsoft Entra | **Security & compliance, built in.** Continuous threat protection, data governance, and access control beneath every layer. |
 
-    This architecture enables organizations to implement sophisticated governance without overwhelming operational teams.
+```
+┌──────────────────────────────────────────────────────────────────────────┐
+│  THE EXPERIENCES · FRONTIER PILLARS                                      │
+│  Enrich employees │ Reinvent customers │ Reshape process │ Bend the curve│
+├──────────────────────────────────────────────────────────────────────────┤
+│  L2 · AGENT OPERATIONS — one layer, two jobs                             │
+│                                                                          │
+│  DELIVERS THE EXPERIENCE                                                 │
+│    Mixed agent types · Context (IQ) · Tools (MCP) · Collaboration        │
+│                                                                          │
+│  AGENT-LEVEL TRUST — BUILT IN                                            │
+│    Traces · Evals · Red-teaming · Guardrails                             │
+├──────────────────────────────────────────────────────────────────────────┤
+│  PLATFORM TRUST — spans every pillar & every agent                       │
+│    L1 Governance Hub  — govern every call                                │
+│    L3 Agent Management — every agent owned                               │
+│    L4 Security Foundation — protect & detect                             │
+└──────────────────────────────────────────────────────────────────────────┘
+```
 
-2.  🚀 Scale with Confidence  
-    The layered approach is purpose-built for scale, enabling organizations to grow from 10 agents to 10,000 with consistent governance:
-    *   Hub-and-spoke deployment allows local autonomy with central oversight
-    *   Automated compliance eliminates manual bottlenecks
-    *   Fleet operations provide visibility across entire agent ecosystem
-    *   Reusable patterns accelerate deployment of new agents
+**Regardless of the agent, data, tools, or models — trust is shared: agent-level in Agent Operations, platform-level across the controls.**
 
-3.  🏗️ Built on Microsoft’s AI Experience  
-    Microsoft’s governance capabilities are informed by internal experience building, securing, and governing AI systems. Customers benefit from:
-    *   Responsible AI Standards embedded in engineering processes
-    *   Office of Responsible AI ensuring ethical AI development
-    *   Transparency notes, fairness analysis, and explainability tools
-    *   Proven patterns validated through Microsoft’s own AI deployments
+### Separation of concerns with unified oversight
 
-4.  🏆 Industry Recognition and Market Leadership  
-    The IDC MarketScape Leader designation validates Microsoft’s approach as best-in-class for unified AI governance. Key differentiators identified by IDC include:
-    *   End-to-end governance spanning traditional ML, generative AI, and agentic AI
-    *   Native integration across Foundry, Agent 365, Purview, Entra, and Defender
-    *   Comprehensive approach removing disparate and disconnected tooling
-    *   Operational maturity pairing technical controls with mature governance processes
+Each layer owns a distinct governance responsibility, yet all layers interlock. This layered separation means teams can evolve any single capability — upgrade the gateway, add new compliance evaluators, onboard new agent types, adopt emerging detections — **without destabilizing the rest of the stack**. The result is an architecture that scales from 10 to 10,000 agents while keeping governance both comprehensive and composable.
 
-### 🧱 The Trust Foundation for AI Transformation
+The Governance Hub and the Agent Operations spokes are deployed **hub-and-spoke**: a centrally managed gateway enforces runtime policy while each business unit gets an autonomous environment to build in. **Governance stays centralized; execution scales horizontally.** In short — **local freedom, global rules**.
 
-Ultimately, Microsoft's layered approach provides the trust foundation necessary for AI transformation at enterprise scale. As the presentation emphasizes:
+---
 
-> **"💡 Those that can trust will scale. Those that scale AI effectively will win."**
+## 🤝 Trust is everybody's responsibility
 
-The layered architecture enables this virtuous cycle:
+Trust isn't one team's job — it's layered across **four interconnected controls that are complementary, not sequential**. Note the ownership line under each; this is the heart of the model.
 
-*   ✅ **Governance enables trust** through comprehensive controls and visibility
-*   ✅ **Trust enables scale** by removing barriers to AI adoption
-*   ✅ **Scale delivers competitive advantage** through AI-driven innovation
+| Control | Scope | What it delivers | **Owned by** |
+|---------|-------|------------------|--------------|
+| 🔶 **Agent Operations** | **Agent-level** | End-to-end traces, AI evals, red-teaming & guardrails — tuned to each agent's type and objective | **The agent builder** |
+| 🔷 **Governance Hub** | **Platform · Govern** | Every model, tool & agent call flows through one governed gateway — routing, policy, content safety, capacity & observability | **The AI CoE & platform team** |
+| 🟢 **Agent Management** | **Platform · Identify** | Every agent is an owned enterprise asset — a first-class identity, sponsor, lifecycle & audit trail, **whoever built it and wherever it runs** | **IAM & security** |
+| 🛡️ **Security Foundation** | **Platform · Protect** | Defender, Purview & Entra deliver threat protection, data governance & access beneath every agent | **The security org** |
 
-### 🔮 Future-Proofing AI Governance
+**Trust starts inside the agent and extends across the platform — from 10 to 10,000 agents.**
 
-The layered approach is designed for adaptability as AI technology and regulations evolve:
+➡️ Full operating model and RACI: **[Organizational Alignment & Ownership](./organizational-alignment-and-ownership.md)**
 
-*   🔌 **Protocol-agnostic:** Supports REST, MCP, A2A, and emerging protocols
-*   ☁️ **Multi-cloud capable:** Consistent governance across hybrid and cloud environments
-*   🧩 **Extensible:** Partner integrations (Credo AI, Saidot) enhance capabilities
-*   📜 **Regulatory alignment:** With many layered controls in place, mapping regulatory requirements to technical controls becomes more straightforward, enabling faster compliance with new regulations as they arise.
+### 🟢 Agent Management is the command center — and the connective tissue
 
-### 📊 Measurable Business Impact
+One layer deserves a closer look, because it is the most under-scoped in practice and the highest-leverage in effect.
 
-Organizations implementing Microsoft's layered governance approach can expect:
+> **Microsoft Agent 365 is not the control plane for *Microsoft* agents. It is the control plane for *every* agent.**
 
-| Metric | Impact |
-|--------|--------|
-| 💰 Regulatory expenses | **20% reduction** through effective governance technologies |
-| 🚀 GenAI pilot success | **95% improvement** vs. ungoverned approaches |
-| 🛡️ Data breach risk from shadow AI | **80% reduction** |
-| 🏆 AI governance effectiveness | **3.4x higher** |
-| ⚡ Time-to-value | **Faster** with pre-built patterns and automation |
+| Agent type | How it lands in Agent 365 |
+|------------|---------------------------|
+| **SaaS** — Microsoft 365 Copilot, Copilot Studio | Native — automatic identity and registry entry |
+| **Managed runtime** — Microsoft Foundry Agent Service | Native — identity per project and per published agent |
+| **Platform / BYO** — your framework on AKS, ACA, Agent Framework | Register via workload identity + the **Agent 365 SDK** |
+| **Third-party & on-prem** — partner and non-Microsoft runtimes | Federate via the **Agent 365 SDK**, which a broad partner ecosystem already integrates with |
 
-### 🚀 Call to Action for Enterprises
+**One registry. One identity model. One policy surface. One audit trail.** Organised around three pillars — **Observe** (registry, agent map, analytics), **Govern** (onboarding, lifecycle, audit, data compliance), and **Secure** (access control, data security, threat protection).
 
-To capitalize on Microsoft's layered approach, enterprises should:
+It earns the "command center" name in two ways:
 
-| Step | Action | Description |
-|------|--------|-------------|
-| **1** | 🔍 **Assess current state** | Evaluate existing AI governance gaps and risks |
-| **2** | 🗓️ **Plan deployment** | Design hub-and-spoke architecture aligned with organizational structure |
-| **3** | 🛠️ **Implement in phases** | Deploy governance hub, enable observability, activate agent identity |
-| **4** | 🛡️ **Integrate security fabric** | Connect Defender, Purview, and Entra |
-| **5** | 🎓 **Enable stakeholders** | Train governance teams, developers, and operators |
-| **6** | 📊 **Measure and optimize** | Track compliance, costs, and time-to-value metrics |
+1. **It attributes traffic to an agent.** Most AI calls reach models via proxies or gateways, **losing the calling identity in the process**. Without this layer you can see that *something* called a model — not *which agent*, *on whose behalf*, *under what approval*, or *with what data*.
+2. **It aggregates signals from the whole stack.** Agent 365 consolidates **Entra, Defender, and Purview** insights — alongside gateway audit logs and Foundry traces — into one agent-centric control plane with **detailed logs for audit and triage**.
 
-> [!IMPORTANT]
-> The era of AI at scale demands governance as a strategic capability, not a compliance burden. Microsoft's layered approach provides the architecture, tools, and ecosystem to make this vision a reality.
+> **The governing principle:** the best way to manage agents is to **extend the infrastructure you already use to manage users**. Same Entra, same Purview, same Defender, same admin center — agents simply become another identity type.
 
-### 📚 Key Resources and References
+➡️ Full detail: **[Layer 3 · Agent Management](./layer-3-agent-management.md)**
 
-*   📘 Citadel End-to-End Guidance: <https://aka.ms/foundry-citadel>
-*   🏛️ Citadel Governance Hub (central deployment): <https://aka.ms/ai-hub-gateway>
-*   🧱 Citadel Agents Environment (spoke deployments): <https://github.com/Azure/AI-Landing-Zones>
-*   📚 Microsoft Learn – AI Gateway in Azure API Management: [learn.microsoft.com](https://learn.microsoft.com/en-us/azure/api-management/genai-gateway-capabilities)
-*   📚 Microsoft Learn – Foundry Control Plane Overview: [learn.microsoft.com](https://learn.microsoft.com/en-us/azure/ai-foundry/control-plane/overview)
-*   📚 Microsoft Learn – Governing Agent Identities with Entra ID: [learn.microsoft.com](https://learn.microsoft.com/en-us/entra/id-governance/agent-id-governance-overview)
-*   📄 EU AI Act High-Risk Requirements Guide: [euairisk.com](https://euairisk.com/resources/eu-ai-act-high-risk-requirements)
-***
+---
+
+## 🛡️ Defense in depth: no single point of failure
+
+**One control is never enough — enforce critical guardrails in more than one place.**
+
+Standard security practice: never depend on a single layer. If it's bypassed or simply can't apply, the system is exposed. Citadel's controls **deliberately overlap**, so coverage holds however an agent is built or hosted.
+
+**Worked example — content safety is enforceable at three controls:**
+
+| Control | Where it applies |
+|---------|------------------|
+| 🔷 **Governance Hub** | At the AI gateway and at Foundry-hosted models |
+| 🔶 **Agent Operations** | In Foundry — Agent Service runtime & control-plane guardrails |
+| 🛡️ **Security Foundation** | Microsoft Defender (Defender for AI) monitoring across the estate |
+
+**When one control can't apply, another holds the line:**
+
+| Scenario | What breaks | What holds |
+|----------|-------------|-----------|
+| **Agent runs outside Foundry** — a self-hosted model on a GPU VM | Agent Operations & Security Foundation can't apply out of the box | ➡️ **Governance Hub enforces it at the gateway**, because that traffic still flows through the gateway as mediator between agent and model |
+| **Microsoft Copilot agents** — traffic doesn't traverse your gateway or Foundry | Governance Hub & Agent Operations can't apply out of the box | ➡️ **Agent Management (Agent 365) and Security Foundation (Defender) enforce it** — on top of Copilot's native protections |
+
+**Same risk, multiple enforcement points — if one control can't apply or is bypassed, another does.**
+
+---
+
+## 👁️ Layered observability: one estate, many lenses
+
+The same telemetry, surfaced for the people who act on it. Redundancy isn't waste — it's the right **altitude** for each audience, and **each lens ends in an action**.
+
+<table>
+<tr>
+<th align="left" width="50%">🟣 CENTRAL IT, FinOps &amp; SECURITY<br/><sub>See the whole estate</sub></th>
+<th align="left" width="50%">🔵 AGENT OWNERS &amp; BUILDERS<br/><sub>See their own agents</sub></th>
+</tr>
+<tr valign="top">
+<td>
+
+**Agent 365 dashboard** — organization-wide view of every agent: security signals, access patterns, usage and activation.
+
+**Governance Hub performance, usage & chargeback** — organization-wide, via the AI Gateway, surfaced through Power BI–powered dashboards.
+
+**Act on it**
+- Assign capacity controls and quotas
+- Govern model access with RBAC — Governance Hub
+- Suspend rogue agents — block in Agent 365 or revoke the access contract
+- Alert on critical events — backend, authorization, content-safety, PII failures
+
+</td>
+<td>
+
+**Foundry Observability** — end-to-end performance, traces, evals and quality signals per agent.
+
+**Foundry usage & cost** — per-agent consumption for the team that owns it.
+
+**Act on it**
+- Apply capacity controls to their own agents
+- **Agent Optimizer** — learns from agent behavior and recommends better configurations: sharper instructions, skills and tool descriptions, and model selection
+
+</td>
+</tr>
+</table>
+
+**Same signals, different altitude — everyone sees what they need to act on, nobody flies blind.**
+
+---
+
+## 🚀 Every Frontier pillar, delivered
+
+One experience engine, four experiences. The **trust controls are identical in every row** — that's the point: they don't change with the agent type.
+
+| Pillar | The experience | Agent pattern | Public proof point |
+|--------|----------------|---------------|--------------------|
+| **01 · Enrich employee experiences** | Copilot — and pro-code agents in the flow of work. Low-code SaaS agents get every maker started; then publish pro-code Foundry agents straight into Microsoft 365, bringing specialist depth into the same employee experience. | **Copilot Studio (SaaS) + Foundry Agents published to Microsoft 365** | **Children International** — cut solution development from 3 months to 2 days; on track to grow direct child interventions 25% in four years with no budget increase. |
+| **02 · Reinvent customer engagement** | Customer-facing agents that act — grounded in your product and customer IQ, using MCP tools to act in real systems, at scale, without running the infrastructure. | **Managed runtime — Microsoft Foundry Agent Service** | **Alaska Airlines** — embedded AI into service workflows: 75% less customer planning time, 90% guest satisfaction, 87% would use it again. |
+| **03 · Reshape business processes** | Autonomous, collaborating agents. Redesign the workflow, don't just speed it up — bring your own framework on Azure managed compute and let multiple agents collaborate on the state of the business, within clear boundaries. | **Managed compute (BYO) on AKS / ACA + multi-agent collaboration** | **Levi's** — work once estimated at up to a year completed in a single day; a 97% productivity gain. |
+| **04 · Bend the curve on innovation** | A maker in every role. Innovation stalls when only specialists can build — give every role the full range of agent types on one platform, with shared IQ, tools, and templates. | **The full mix — SaaS + Foundry + BYO + 3rd-party/on-prem, any model** | **Accenture** — centralized enterprise AI platform: build time down 50%, efficiency up 30%, costs down 20%; 17 use cases shipped in 4 months. |
+
+➡️ How each agent type wires into each layer: **[Agent Types Mapping](./agent-types-mapping.md)**
+
+### 🔶 Agent Operations: runtime *and* observability & control plane
+
+A second layer worth calling out, because the distinction unlocks adoption for customers who cannot re-platform.
+
+**Microsoft Foundry plays two independent roles — adopt either, or both:**
+
+| Role | What it means |
+|------|---------------|
+| **① Runtime** | Host agents in Foundry — **prompt agents** and **hosted agents** (your own container and framework). They **automatically inherit every Foundry capability**: tracing, evaluations, guardrails, identity, IQ grounding, MCP tools, and fleet operations. |
+| **② Observability plane for agents running elsewhere** | Agents on **AKS, Azure Container Apps, other clouds, or on-premises** forward **OpenTelemetry GenAI semantic traces** into Foundry-connected Application Insights — and light up in the **same** plane for centralized traces, AI evaluations, quality and safety signals, and fleet operations, **without being hosted in Foundry at all**. |
+
+This **decouples the hosting decision from the governance decision**. There is no forced choice between "adopt Foundry as a runtime" and "no Foundry at all" — estate-wide observability is adoptable on its own, and it is often the faster route to visibility across a heterogeneous estate.
+
+> **The managed runtime is a convenience; the observability is the strategic value.**
+
+➡️ Full detail: **[Layer 2 · Agent Operations](./layer-2-agent-operations.md)**
+
+---
+
+## 📈 Measurable business impact
+
+| Outcome | What it looks like |
+|---------|--------------------|
+| 🚀 **Faster time-to-value** | Pre-built patterns and templated landing zones turn months of build-out into days |
+| 🛡️ **Reduced risk** | Compliance is woven in from the start, not bolted on — agents operate within safe boundaries from day one |
+| 💰 **Cost control** | Granular usage tracking, quotas, and per-consumer chargeback — no surprise invoices |
+| 📈 **Scalable adoption** | When one team succeeds, others follow the same blueprint instead of reinventing the wheel |
+| 🤝 **Cross-functional alignment** | Compliance officers and AI developers work from the same explicit, automated requirements |
+| 🔁 **Unified AI ecosystem & reuse** | All shared models, tools, and agents reachable through one gateway and listed in one registry — more reuse, less duplication |
+
+### Future-proofing
+
+- 🔌 **Protocol-agnostic** — REST, MCP, A2A, and emerging protocols
+- ☁️ **Multi-cloud and hybrid capable** — one control plane, data plane everywhere
+- 🧩 **Extensible** — partner integrations (Credo AI, Saidot, Palo Alto Networks, Zenity) enhance capabilities
+- 📜 **Regulatory alignment** — with layered controls in place, mapping new regulatory requirements to technical controls becomes straightforward
+
+---
+
+## 🌟 The bottom line
+
+**Frontier is the destination. The AI Citadel Blueprint is how you get there — any agent, at scale.**
+
+It reduces to two ideas:
+
+1. **One experience engine.** Agent Operations delivers every experience — any agent, grounded in your data, using your tools, on any model.
+2. **Shared trust.** It starts inside the agent with traces, evals, red-teaming, and guardrails, and extends across the platform through Governance Hub, Agent Management, and Security Foundation — **layered deliberately, so no single control is a single point of failure.**
+
+That is what lets you scale from ten agents to ten thousand **without trading away cost control, identity, data protection, or compliance**. And it isn't theoretical for Microsoft — we are Customer Zero.
+
+> 💡 **Those that can trust will scale. Those that scale AI effectively will win.**
+
+---
+
+## 📚 Key resources and references
+
+**Citadel Blueprint**
+
+- 📘 Citadel end-to-end guidance: <https://aka.ms/foundry-citadel>
+- 🏛️ Citadel Governance Hub Landing Zone (central deployment): <https://aka.ms/ai-hub-gateway>
+- 🧱 Citadel Agents Operations Landing Zone (spoke deployments): <https://github.com/Azure/AI-Landing-Zones>
+- 🎯 Agent Management (Agent 365): <https://www.microsoft.com/en-us/microsoft-agent-365>
+- 🛡️ Citadel Security Foundation Landing Zone: <https://learn.microsoft.com/en-us/azure/defender-for-cloud/ai-threat-protection>
+
+**Microsoft Learn**
+
+- AI Gateway capabilities in Azure API Management: <https://learn.microsoft.com/azure/api-management/genai-gateway-capabilities>
+- Microsoft Foundry Control Plane overview: <https://learn.microsoft.com/azure/ai-foundry/control-plane/overview>
+- Governing agent identities with Entra ID: <https://learn.microsoft.com/entra/id-governance/agent-id-governance-overview>
+- AI threat protection in Microsoft Defender for Cloud: <https://learn.microsoft.com/azure/defender-for-cloud/ai-threat-protection>
+
+**Build**
+
+- Microsoft Agent Framework: <https://aka.ms/AgentFramework>
+- Azure AI Landing Zones: <https://github.com/Azure/AI-Landing-Zones>
+- AI Hub Gateway solution accelerator: <https://github.com/Azure-Samples/ai-hub-gateway-solution-accelerator>
+
+**Recognition & references**
+
+- Microsoft named a Leader in the IDC MarketScape for Unified AI Governance Platforms: <https://www.microsoft.com/en-us/security/blog/2026/01/14/microsoft-named-a-leader-in-idc-marketscape-for-unified-ai-governance-platforms/>
+- Azure API Management — unified AI gateway design pattern: <https://techcommunity.microsoft.com/blog/integrationsonazureblog/azure-api-management---unified-ai-gateway-design-pattern/4495436>
+- Discovery Bank customer story: <https://www.microsoft.com/en/customers/story/26157-discovery-bank-azure-openai-in-foundry-models>
+
+---
+
+<sub>AI Citadel Blueprint × Frontier Transformation · Microsoft · Global Black Belt</sub>
